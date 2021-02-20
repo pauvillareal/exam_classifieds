@@ -13,24 +13,27 @@ extension UIViewController {
         self.hideActivityIndicator()
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.tag = 1
-        let w = UIScreen.main.bounds.width
-        let h = UIScreen.main.bounds.height
-        activityIndicatorView.frame = CGRect(x:w/2,y: h/2,width: 70, height: 70)
+        let center = self.view.center
+        activityIndicatorView.frame = CGRect(origin: center, size: CGSize(width: 70, height: 70))
         activityIndicatorView.layer.cornerRadius = 05
         activityIndicatorView.isOpaque = false
         activityIndicatorView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         activityIndicatorView.style = .large
         activityIndicatorView.center = self.view.center
         activityIndicatorView.startAnimating()
-        self.view.addSubview(activityIndicatorView)
+        
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        window?.addSubview(activityIndicatorView)
     }
     
     // Hide activity indicator
     func hideActivityIndicator() {
-        for subview in self.view.subviews {
-            if subview.tag == 1 {
-                subview.removeFromSuperview()
-                return
+        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            for subview in window.subviews {
+                if subview.tag == 1 {
+                    subview.removeFromSuperview()
+                    return
+                }
             }
         }
     }

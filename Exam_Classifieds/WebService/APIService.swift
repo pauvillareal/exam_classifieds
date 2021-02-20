@@ -12,8 +12,9 @@ class APIService :  NSObject {
     
     func getClassifiedsList(completion : @escaping (List) -> ()){
         URLSession.shared.dataTask(with: sourcesURL) { (data, urlResponse, error) in
+            guard let data = data else { return }
             do {
-                if let json = try JSONSerialization.jsonObject(with: data!,
+                if let json = try JSONSerialization.jsonObject(with: data,
                                                                options: []) as? [String: Any] {
                     let jsonData = try? JSONSerialization.data(withJSONObject: json)
                     let listData = try JSONDecoder().decode(List.self, from: jsonData!)

@@ -25,8 +25,8 @@ class DetailsViewController: UIViewController {
         itemNameLabel.text = data?.name
         itemPriceLabel.text = data?.price
         
-        if let imgUrl = data?.image_urls_thumbnails.first {
-            itemImageView.getImageFromURLString(urlString: imgUrl)
+        if let imgUrl = data?.image_urls_thumbnails.first, let id = data?.image_ids.first {
+            itemImageView.getImageFromURLString(urlString: imgUrl, id: id)
         }
     }
     

@@ -6,6 +6,7 @@ target 'Exam_Classifieds' do
   use_frameworks!
 
   # Pods for Exam_Classifieds
+  pod 'Alamofire'
   pod 'AlamofireImage'
 
   target 'Exam_ClassifiedsTests' do

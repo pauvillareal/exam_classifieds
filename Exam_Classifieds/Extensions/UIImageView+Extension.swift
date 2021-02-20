@@ -7,13 +7,28 @@
 
 import UIKit
 import AlamofireImage
+import Alamofire
+
+var imageCache = NSCache<AnyObject, AnyObject>()
 
 extension UIImageView {
-    func getImageFromURLString(urlString:String) {
-        if let imgUrl = URL(string:urlString) {
-            self.af.setImage(withURL: imgUrl)
-        } else {
-            self.image = nil
+    func getImageFromURLString(urlString: String, id: String) {
+        if let cacheImage = imageCache.object(forKey: id as AnyObject) as? UIImage {
+            self.image = cacheImage
+            return
+        }
+        
+        AF.request(urlString).responseData { response in
+            if case .success = response.result {
+                if let data = response.data {
+                    if let image = UIImage(data: data) {
+                        self.image = image
+                        imageCache.setObject(image, forKey: id as AnyObject)
+                    } else {
+                        self.image = nil
+                    }
+                }
+            }
         }
     }
 }
