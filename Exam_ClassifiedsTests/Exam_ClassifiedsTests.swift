@@ -22,7 +22,12 @@ class Exam_ClassifiedsTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-
+    
+    func testListWithNoData() {
+        let list = List(results: [])
+        XCTAssertTrue(list.results.isEmpty)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
